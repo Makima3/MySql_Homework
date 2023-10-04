@@ -1,7 +1,3 @@
-use database123;
-
-
-
 select * from cars;
 # знайти всі машини старші за 2000 р.
 select * from cars where year>2000;
