@@ -39,16 +39,42 @@ group by idClient
 order by avg
 desc limit 1;
 # 15. Вивести відділення, яке видало в кредити найбільше грошей
+select sum(Sum) as maxSum, idDepartment, DepartmentCity
+from department
+join client c on department.idDepartment = c.Department_idDepartment
+join application a on c.idClient = a.Client_idClient
+group by DepartmentCity, idDepartment
+order by maxSum desc
+limit 1;
 # 16. Вивести відділення, яке видало найбільший кредит.
-#
+select max(Sum) as max_sum, idDepartment, DepartmentCity
+from department
+join client c on department.idDepartment = c.Department_idDepartment
+join application a on c.idClient = a.Client_idClient
+group by DepartmentCity, idDepartment
+order by max_sum desc
+limit 1;
 # 17. Усім клієнтам, які мають вищу освіту, встановити усі їхні кредити у розмірі 6000 грн.
-#
+update application join client c on c.idClient = application.Client_idClient
+set sum=6000
+where Education= 'high' ;
 # 18. Усіх клієнтів київських відділень пересилити до Києва.
-#
+update client join department d on d.idDepartment = client.Department_idDepartment
+set City='Kyiv'
+where DepartmentCity = 'kyiv';
 # 19. Видалити усі кредити, які є повернені.
-#
+delete application
+from application
+where CreditState = 'returned';
 # 20. Видалити кредити клієнтів, в яких друга літера прізвища є голосною.
-#
+delete application
+from application join client c on c.idClient = application.Client_idClient
+where
+    LastName like '_a%' or
+    LastName like '_o%' or
+    LastName like '_y%' or
+    LastName like '_u%' or
+
 # 21.Знайти львівські відділення, які видали кредитів на загальну суму більше ніж 5000
 #
 # 22.Знайти клієнтів, які повністю погасили кредити на суму більше ніж 5000
